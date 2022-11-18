@@ -2,14 +2,12 @@ package com.devsuperior.dsmeta.controller;
 
 import com.devsuperior.dsmeta.entities.Sale;
 import com.devsuperior.dsmeta.service.SaleService;
+import com.devsuperior.dsmeta.service.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +17,9 @@ public class SaleController {
     @Autowired
     private SaleService saleService;
 
+    @Autowired
+    private SmsService smsService;
+
     @GetMapping("all")
     @ResponseBody
     public Page<Sale> sales(
@@ -26,5 +27,11 @@ public class SaleController {
             @RequestParam(value = "to", defaultValue = "") String maxDate,
             Pageable pageable) {
         return saleService.sales(minDate, maxDate, pageable);
+    }
+
+    @GetMapping("{id}/notification")
+    @ResponseBody
+    public void notifySms(@PathVariable Long id){
+        smsService.sendSms(id);
     }
 }
