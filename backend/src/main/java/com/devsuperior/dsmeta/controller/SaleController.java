@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("sale")
 public class SaleController {
     @Autowired
     private SaleService saleService;
@@ -17,7 +16,7 @@ public class SaleController {
     @Autowired
     private SmsService smsService;
 
-    @GetMapping("all")
+    @GetMapping("sales")
     public Page<Sale> sales(
             @RequestParam(value = "from", defaultValue = "") String minDate,
             @RequestParam(value = "to", defaultValue = "") String maxDate,
