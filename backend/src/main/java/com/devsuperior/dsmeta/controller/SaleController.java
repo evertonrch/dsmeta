@@ -6,12 +6,9 @@ import com.devsuperior.dsmeta.service.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@Controller
+@RestController
 @RequestMapping("sale")
 public class SaleController {
     @Autowired
@@ -21,7 +18,6 @@ public class SaleController {
     private SmsService smsService;
 
     @GetMapping("all")
-    @ResponseBody
     public Page<Sale> sales(
             @RequestParam(value = "from", defaultValue = "") String minDate,
             @RequestParam(value = "to", defaultValue = "") String maxDate,
@@ -30,7 +26,6 @@ public class SaleController {
     }
 
     @GetMapping("{id}/notification")
-    @ResponseBody
     public void notifySms(@PathVariable Long id){
         smsService.sendSms(id);
     }
